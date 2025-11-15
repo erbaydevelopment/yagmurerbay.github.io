@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Erberk Kalp Yağmur</title>
+  <style>
+    /* Temel düzen */
+    html,body{height:100%;margin:0;font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    body{
+      background: linear-gradient(135deg,#0f172a 0%,#0b1220 60%); /* gece gibi arka plan */
+      overflow:hidden;
+      color:#fff;
+      display:flex;align-items:center;justify-content:center;
+      flex-direction:column;
+    }
+
+    /* Başlık */
+    .title{
+      position:relative;z-index:5;text-align:center;margin-top:24px;
+    }
+    .title h1{font-size:3rem;margin:0;letter-spacing:2px}
+    .subtitle{opacity:0.9;margin-top:6px}
+
+    /* Yağan kalplerin kapsayıcısı */
+    .sky{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+
+    /* Kalp stili */
+    .heart{
+      position:absolute;top:-6vh;left:50%;
+      transform:translateX(-50%) scale(1);
+      font-size:22px; /* kalp boyutu */
+      will-change:transform,opacity;
+      user-select:none;
+      white-space:nowrap;
+      opacity:0;
+      filter:drop-shadow(0 6px 10px rgba(0,0,0,0.45));
+    }
+
+    /* Kalbin düşüş animasyonu - JS ile rastgele süre/veri verilecek */
+    @keyframes fall {
+      0%{transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity:0}
+      10%{opacity:1}
+      100%{transform: translateY(110vh) rotate(360deg) scale(1.1); opacity:0}
+    }
+
+    /* Küçük kontrol paneli (isteğe bağlı) */
+    .controls{position:fixed;left:16px;bottom:16px;background:rgba(255,255,255,0.06);padding:10px;border-radius:10px;backdrop-filter:blur(6px);z-index:7}
+    .controls label{font-size:13px;display:block;margin-bottom:6px}
+    .controls input[type=range]{width:160px}
+
+    /* Responsive başlık küçültme */
+    @media (max-width:520px){.title h1{font-size:2rem}}
+  </style>
+</head>
+<body>
+  <div class="title">
+    <h1>erberk <span style="color:#ff7fb6">kalp yağmur</span></h1>
+    <div class="subtitle">Sayfayı kaydet, aç ve kalplerin yağmasını izle 💌</div>
+  </div>
+
+  <div class="sky" id="sky"></div>
+
+  <div class="controls">
+    <label>Hız: <span id="speedVal">1</span>x</label>
+    <input id="speed" type="range" min="0.4" max="2.0" step="0.1" value="1">
+    <label>Kalp yoğunluğu: <span id="densityVal">12</span></label>
+    <input id="density" type="range" min="2" max="40" step="1" value="12">
+  </div>
+
+  <script>
+    // Basit 'kalp yağmur' scripti
+    // İstediğin metni değiştirebilirsin: `HEART_TEXT` değişkeni
+
+    const SKY = document.getElementById('sky');
+    const SPEED = document.getElementById('speed');
+    const DENSITY = document.getElementById('density');
+    const speedVal = document.getElementById('speedVal');
+    const densityVal = document.getElementById('densityVal');
+
+    // Kalplerin içinde hangi yazının gözükmesini istersen buraya yaz
+    const HEART_TEXT = '❤ erberk';
+
+    // Kalp üretme fonksiyonu
+    function createHeart(){
+      const el = document.createElement('div');
+      el.className = 'heart';
+      el.textContent = HEART_TEXT;
+
+      // Rastgele başlangıç sol konumu (yüzde)
+      const left = Math.random()*100;
+      // Rastgele boyut
+      const size = 12 + Math.random()*36; // px
+      el.style.fontSize = size + 'px';
+      el.style.left = left + 'vw';
+
+      // Her kalp için rastgele animasyon süresi ve gecikme
+      const duration = 6 + Math.random()*6; // saniye
+      const delay = Math.random()*2; // saniye
+
+      // Dönme ve yatay salınım için küçük keyframe benzeri transform değişiklikleri
+      el.style.animation = `fall ${duration}s linear ${delay}s forwards`;
+
+      // Rastgele yatay hareket için CSS transform ekleme per-frame yerine animasyon sonrasında hafif translateX değişikliği
+      const horizontalOffset = (Math.random()-0.5) * 20; // vw
+      el.style.setProperty('--hOffset', horizontalOffset + 'vw');
+
+      SKY.appendChild(el);
+
+      // Temizlik: animasyon bitince DOM'dan çıkar
+      setTimeout(()=>{
+        el.remove();
+      }, (delay + duration) * 1000 + 100);
+    }
+
+    // Döngü: density değerine göre belli aralıklarla kalp üret
+    let intervalId;
+    function startRain(){
+      clearInterval(intervalId);
+      const count = parseInt(DENSITY.value,10);
+      densityVal.textContent = count;
+      const baseRate = 1200; // ms
+      const interval = Math.max(100, baseRate / Math.sqrt(count));
+      intervalId = setInterval(()=>{
+        // Her döngüde birden çok kalp üretebiliriz
+        const burst = Math.max(1, Math.round(Math.random()*1.6));
+        for(let i=0;i<burst;i++) createHeart();
+      }, interval / parseFloat(SPEED.value));
+    }
+
+    // Kontrolleri dinle
+    SPEED.addEventListener('input',()=>{speedVal.textContent = SPEED.value; startRain();});
+    DENSITY.addEventListener('input',()=>{densityVal.textContent = DENSITY.value; startRain();});
+
+    // Başlangıç
+    startRain();
+
+    // Fare tıklayınca da kalp bırak (eğlence amaçlı)
+    document.body.addEventListener('click',(e)=>{
+      const el = document.createElement('div');
+      el.className='heart';
+      el.textContent = HEART_TEXT;
+      el.style.left = (e.clientX / window.innerWidth * 100) + 'vw';
+      el.style.fontSize = (20 + Math.random()*30) + 'px';
+      el.style.animation = `fall ${4 + Math.random()*4}s linear 0s forwards`;
+      SKY.appendChild(el);
+      setTimeout(()=>el.remove(),8000);
+    });
+
+    // Mobilde performans için arka planda çok fazla element olursa temizle
+    setInterval(()=>{
+      const hearts = SKY.children;
+      if(hearts.length > 200){
+        for(let i=0;i<50;i++) if(SKY.firstChild) SKY.removeChild(SKY.firstChild);
+      }
+    },5000);
+  </script>
+</body>
+</html>
