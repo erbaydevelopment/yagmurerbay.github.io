@@ -9,21 +9,23 @@
     html,body{height:100%;margin:0;font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
     body{
       background: linear-gradient(135deg,#0f172a 0%,#0b1220 60%); /* gece gibi arka plan */
-      overflow:hidden;
+      overflow-x:hidden;
+      overflow-y:auto; /* galeri için dikey kaydırma serbest */
       color:#fff;
-      display:flex;align-items:center;justify-content:center;
+      display:flex;align-items:center;justify-content:flex-start;
       flex-direction:column;
+      padding-bottom:80px;
     }
 
     /* Başlık */
     .title{
-      position:relative;z-index:5;text-align:center;margin-top:24px;
+      position:relative;z-index:5;text-align:center;margin-top:48px;
     }
     .title h1{font-size:3rem;margin:0;letter-spacing:2px}
     .subtitle{opacity:0.9;margin-top:6px}
 
     /* Yağan kalplerin kapsayıcısı */
-    .sky{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+    .sky{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
 
     /* Kalp stili */
     .heart{
@@ -44,20 +46,127 @@
       100%{transform: translateY(110vh) rotate(360deg) scale(1.1); opacity:0}
     }
 
+    /* Galeri bölümü */
+    .gallery-section{
+      position:relative;
+      z-index:4;
+      margin-top:56px;
+      width:100%;
+      display:flex;
+      justify-content:center;
+      padding:0 16px;
+      box-sizing:border-box;
+    }
+    .gallery-inner{
+      width:100%;
+      max-width:960px;
+      background:rgba(15,23,42,0.9);
+      border-radius:26px;
+      padding:22px 18px 24px;
+      border:1px solid rgba(148,163,184,0.35);
+      box-shadow:0 18px 45px rgba(15,23,42,0.85);
+      backdrop-filter:blur(14px);
+    }
+    .gallery-header{text-align:center;margin-bottom:16px}
+    .gallery-header h2{margin:0;font-size:1.4rem;letter-spacing:0.04em}
+    .gallery-header p{margin:6px 0 0;font-size:0.9rem;opacity:0.8}
+    .gallery-grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:10px;
+    }
+    .gallery-item{
+      position:relative;
+      border-radius:18px;
+      overflow:hidden;
+      background:#020617;
+      box-shadow:0 12px 25px rgba(15,23,42,0.9);
+      transform:translateY(0);
+      transition:transform .25s ease,box-shadow .25s ease;
+    }
+    .gallery-item img{
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:saturate(1.08);
+      transition:transform .4s ease,filter .4s ease,opacity .4s ease;
+    }
+    .gallery-item::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(244,114,182,0.12),transparent 55%),
+        radial-gradient(circle at 100% 100%,rgba(56,189,248,0.16),transparent 60%);
+      mix-blend-mode:screen;
+      pointer-events:none;
+    }
+    .gallery-item:hover{
+      transform:translateY(-6px);
+      box-shadow:0 22px 46px rgba(15,23,42,0.95);
+    }
+    .gallery-item:hover img{
+      transform:scale(1.08);
+      filter:saturate(1.25);
+    }
+
     /* Küçük kontrol paneli (isteğe bağlı) */
-    .controls{position:fixed;left:16px;bottom:16px;background:rgba(255,255,255,0.06);padding:10px;border-radius:10px;backdrop-filter:blur(6px);z-index:7}
+    .controls{
+      position:fixed;
+      left:16px;
+      bottom:16px;
+      background:rgba(255,255,255,0.06);
+      padding:10px;
+      border-radius:10px;
+      backdrop-filter:blur(6px);
+      z-index:7
+    }
     .controls label{font-size:13px;display:block;margin-bottom:6px}
     .controls input[type=range]{width:160px}
 
     /* Responsive başlık küçültme */
-    @media (max-width:520px){.title h1{font-size:2rem}}
+    @media (max-width:520px){
+      .title h1{font-size:2rem}
+    }
   </style>
 </head>
 <body>
   <div class="title">
     <h1>Erberk <span style="color:#ff7fb6">❤ Yağmur Ve Güneş</span></h1>
-    <div class="subtitle"> 💌</div>
+    <div class="subtitle">💌</div>
   </div>
+
+  <!-- GALERİ -->
+  <section class="gallery-section">
+    <div class="gallery-inner">
+      <div class="gallery-header">
+        <h2>Fotoğraf Galerisi</h2>
+        <p>En sevdiğimiz anlardan küçük bir koleksiyon</p>
+      </div>
+      <div class="gallery-grid">
+        <figure class="gallery-item">
+          <img src="galeri1.jpeg" alt="Galeri fotoğrafı 1" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+          <img src="galeri2.jpeg" alt="Galeri fotoğrafı 2" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+          <img src="galeri3.jpeg" alt="Galeri fotoğrafı 3" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+          <img src="galeri4.jpeg" alt="Galeri fotoğrafı 4" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+          <img src="galeri5.jpeg" alt="Galeri fotoğrafı 5" loading="lazy">
+        </figure>
+        <figure class="gallery-item">
+          <img src="galeri6.jpeg" alt="Galeri fotoğrafı 6" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
 
   <div class="sky" id="sky"></div>
 
@@ -70,15 +179,13 @@
 
   <script>
     // Basit 'kalp yağmur' scripti
-    // İstediğin metni değiştirebilirsin: `HEART_TEXT` değişkeni
-
     const SKY = document.getElementById('sky');
     const SPEED = document.getElementById('speed');
     const DENSITY = document.getElementById('density');
     const speedVal = document.getElementById('speedVal');
     const densityVal = document.getElementById('densityVal');
 
-    // Kalplerin içinde hangi yazının gözükmesini istersen buraya yaz
+    // Kalplerin içinde hangi yazının gözükeceğini buradan değiştir
     const HEART_TEXT = '❤';
 
     // Kalp üretme fonksiyonu
@@ -98,16 +205,14 @@
       const duration = 6 + Math.random()*6; // saniye
       const delay = Math.random()*2; // saniye
 
-      // Dönme ve yatay salınım için küçük keyframe benzeri transform değişiklikleri
       el.style.animation = `fall ${duration}s linear ${delay}s forwards`;
 
-      // Rastgele yatay hareket için CSS transform ekleme per-frame yerine animasyon sonrasında hafif translateX değişikliği
       const horizontalOffset = (Math.random()-0.5) * 20; // vw
       el.style.setProperty('--hOffset', horizontalOffset + 'vw');
 
       SKY.appendChild(el);
 
-      // Temizlik: animasyon bitince DOM'dan çıkar
+      // Temizlik
       setTimeout(()=>{
         el.remove();
       }, (delay + duration) * 1000 + 100);
@@ -122,7 +227,6 @@
       const baseRate = 1200; // ms
       const interval = Math.max(100, baseRate / Math.sqrt(count));
       intervalId = setInterval(()=>{
-        // Her döngüde birden çok kalp üretebiliriz
         const burst = Math.max(1, Math.round(Math.random()*1.6));
         for(let i=0;i<burst;i++) createHeart();
       }, interval / parseFloat(SPEED.value));
@@ -147,7 +251,7 @@
       setTimeout(()=>el.remove(),8000);
     });
 
-    // Mobilde performans için arka planda çok fazla element olursa temizle
+    // Mobilde performans için temizlik
     setInterval(()=>{
       const hearts = SKY.children;
       if(hearts.length > 200){
