@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Erberk Kalp Yağmur</title>
+  <title>Erberk ❤ Yağmur Ve Güneş</title>
   <style>
     /* Temel düzen */
     html,body{height:100%;margin:0;font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
@@ -21,15 +21,6 @@
     }
     .title h1{font-size:3rem;margin:0;letter-spacing:2px}
     .subtitle{opacity:0.9;margin-top:6px}
-
-    /* Fotoğraf çerçevesi */
-    .photo-wrapper{position:relative;z-index:4;margin-top:28px;text-align:center}
-    .photo-frame{display:inline-block;padding:6px;border-radius:26px;background:radial-gradient(circle at 0% 0%,rgba(244,114,182,0.6),transparent 55%),radial-gradient(circle at 100% 100%,rgba(56,189,248,0.6),transparent 55%);box-shadow:0 0 25px rgba(236,72,153,0.55),0 0 55px rgba(59,130,246,0.35);animation:glow 4s ease-in-out infinite;max-width:min(420px,90vw)}
-    .photo-inner{border-radius:20px;overflow:hidden;background:#020617}
-    .photo-inner img{display:block;width:100%;height:auto;object-fit:cover}
-    .photo-caption{margin-top:10px;font-size:0.9rem;opacity:0.85}
-
-    @keyframes glow{0%{transform:translateY(0);box-shadow:0 0 18px rgba(244,114,182,0.4),0 0 32px rgba(59,130,246,0.35)}50%{transform:translateY(-4px);box-shadow:0 0 32px rgba(244,114,182,0.65),0 0 60px rgba(56,189,248,0.55)}100%{transform:translateY(0);box-shadow:0 0 18px rgba(244,114,182,0.4),0 0 32px rgba(59,130,246,0.35)}}
 
     /* Yağan kalplerin kapsayıcısı */
     .sky{position:fixed;inset:0;pointer-events:none;overflow:hidden}
@@ -58,71 +49,24 @@
     .controls label{font-size:13px;display:block;margin-bottom:6px}
     .controls input[type=range]{width:160px}
 
-    /* Galeri bölümü */
-    .gallery-section{position:relative;z-index:4;margin-top:72px;margin-bottom:64px;padding:0 16px 32px;box-sizing:border-box;width:100%;display:flex;justify-content:center}
-    .gallery-inner{width:100%;max-width:960px;background:rgba(15,23,42,0.85);border-radius:26px;padding:22px 18px 24px;border:1px solid rgba(148,163,184,0.35);box-shadow:0 18px 45px rgba(15,23,42,0.85);backdrop-filter:blur(14px)}
-    .gallery-header{text-align:center;margin-bottom:16px}
-    .gallery-header h2{margin:0;font-size:1.4rem;letter-spacing:0.04em}
-    .gallery-header p{margin:6px 0 0;font-size:0.9rem;opacity:0.8}
-    .gallery-grid{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-    .gallery-item{position:relative;border-radius:18px;overflow:hidden;background:#020617;box-shadow:0 12px 25px rgba(15,23,42,0.9);transform:translateY(0);transition:transform .25s ease,box-shadow .25s ease}
-    .gallery-item img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(1.08);transition:transform .4s ease,filter .4s ease,opacity .4s ease}
-    .gallery-item::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 0% 0%,rgba(244,114,182,0.12),transparent 55%),radial-gradient(circle at 100% 100%,rgba(56,189,248,0.16),transparent 60%);mix-blend-mode:screen;pointer-events:none}
-    .gallery-item:hover{transform:translateY(-6px);box-shadow:0 22px 46px rgba(15,23,42,0.95)}
-    .gallery-item:hover img{transform:scale(1.08);filter:saturate(1.25)}
-
     /* Responsive başlık küçültme */
     @media (max-width:520px){.title h1{font-size:2rem}}
   </style>
 </head>
 <body>
   <div class="title">
-    <h1>erberk <span style="color:#ff7fb6">kalp yağmur</span></h1>
-    <div class="subtitle">Sayfayı kaydet, aç ve kalplerin yağmasını izle 💌</div>
-  </div>
-
-  <div class="photo-wrapper">
-    <div class="photo-frame">
-      <div class="photo-inner">
-        <!-- Fotoğraf dosyanın adını buradan değiştirebilirsin -->
-        <img src="foto.jpg" alt="Erberk & Yağmur" loading="lazy">
-      </div>
-    </div>
-    <div class="photo-caption">buraya erberk & yağmur'un en sevdiğin fotoğrafı gelecek 💜</div>
+    <h1>Erberk <span style="color:#ff7fb6">❤ Yağmur Ve Güneş</span></h1>
+    <div class="subtitle"> 💌</div>
   </div>
 
   <div class="sky" id="sky"></div>
 
-  <div class="controls">$1</div>
-
-  <section class="gallery-section">
-    <div class="gallery-inner">
-      <div class="gallery-header">
-        <h2>Fotoğraf Galerisi</h2>
-        <p>Erberk ❤ Yağmur ve Güneş'in en sevdiği anları</p>
-      </div>
-      <div class="gallery-grid">
-        <figure class="gallery-item">
-          <img src="galeri1.jpeg" alt="Galeri fotoğrafı 1" loading="lazy">
-        </figure>
-        <figure class="gallery-item">
-          <img src="galeri2.jpeg" alt="Galeri fotoğrafı 2" loading="lazy">
-        </figure>
-        <figure class="gallery-item">
-          <img src="galeri3.jpeg" alt="Galeri fotoğrafı 3" loading="lazy">
-        </figure>
-        <figure class="gallery-item">
-          <img src="galeri4.jpeg" alt="Galeri fotoğrafı 4" loading="lazy">
-        </figure>
-        <figure class="gallery-item">
-          <img src="galeri5.jpeg" alt="Galeri fotoğrafı 5" loading="lazy">
-        </figure>
-        <figure class="gallery-item">
-          <img src="galeri6.jpeg" alt="Galeri fotoğrafı 6" loading="lazy">
-        </figure>
-      </div>
-    </div>
-  </section>
+  <div class="controls">
+    <label>Hız: <span id="speedVal">1</span>x</label>
+    <input id="speed" type="range" min="0.4" max="2.0" step="0.1" value="1">
+    <label>Kalp yoğunluğu: <span id="densityVal">12</span></label>
+    <input id="density" type="range" min="2" max="40" step="1" value="12">
+  </div>
 
   <script>
     // Basit 'kalp yağmur' scripti
@@ -135,7 +79,7 @@
     const densityVal = document.getElementById('densityVal');
 
     // Kalplerin içinde hangi yazının gözükmesini istersen buraya yaz
-    const HEART_TEXT = '❤ erberk';
+    const HEART_TEXT = '❤';
 
     // Kalp üretme fonksiyonu
     function createHeart(){
